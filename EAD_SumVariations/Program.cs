@@ -6,9 +6,10 @@ namespace EAD_SumVariations
     {
         static void Main(string[] args)
         {
-            //sum_variation1();
-            //sum_variation2();
+            sum_variation1();
+            sum_variation2();
             sum_variation3();
+            sum_variation4();
         }
 
         static void sum_variation1()
@@ -34,7 +35,7 @@ namespace EAD_SumVariations
         static void sum_variation3()
         {
             //Calculates Square Sum
-            Console.WriteLine("***************Variation 3 - Summation Σ*************");
+            Console.WriteLine("***************Variation 3 - Summation*************");
             Console.WriteLine("Enter \'Single digit Numbers\' you want to sum in a Row i.e; 1 2 3: ");
             string numbers = Console.ReadLine();
             int sum = 0;
@@ -43,7 +44,25 @@ namespace EAD_SumVariations
                 if (Char.IsDigit(numbers[i]))
                     sum += (int)(numbers[i] - '0');
             }
-            Console.WriteLine("Summation(Σ) = " + sum);
+            Console.WriteLine("Summation = " + sum);
+        }
+        static void sum_variation4()
+        {
+            //Calculates Square Sum
+            Console.WriteLine("***************Variation 5 - Average*************");
+            Console.WriteLine("Enter \'Single digit Numbers\' you want to find average of, in a Row i.e; 1 2 3: ");
+            string numbers = Console.ReadLine();
+            int sum = 0;
+            int n = 0;
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                if (Char.IsDigit(numbers[i]))
+                {
+                    sum += (int)(numbers[i] - '0');
+                    n++;
+                }
+            }
+            Console.WriteLine("Summation = " + sum/n);
         }
     }
 }
