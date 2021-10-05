@@ -6,26 +6,22 @@ namespace EAD_SumVariations
     {
         static void Main(string[] args)
         {
-            //sum_variation1();
-            //sum_variation2();
-            //sum_variation3();
-            //sum_variation4();
-            sum_variation6();
+            menu();
         }
         static void menu()
         {
-            Console.WriteLine("*******************Menu*********************");
-            Console.WriteLine("1 - Sum.");
-            Console.WriteLine("2 - Square Sum.");
-            Console.WriteLine("3 - Summation of N numbers.");
-            Console.WriteLine("4 - Average of N Numbers.");
-            Console.WriteLine("5 - N numbers of Fibonacci Sequence.");
-            Console.WriteLine("6 - Sums of numbers Between a range.");
-            Console.WriteLine("7 - Exit.");
-            Console.Write("Enter Your Choice: ");
             int choice = 0;
             do
             {
+                Console.WriteLine("*******************Menu*********************");
+                Console.WriteLine("1 - Sum.");
+                Console.WriteLine("2 - Square Sum.");
+                Console.WriteLine("3 - Summation of N numbers.");
+                Console.WriteLine("4 - Average of N Numbers.");
+                Console.WriteLine("5 - N numbers of Fibonacci Sequence.");
+                Console.WriteLine("6 - Sums of numbers Between a range.");
+                Console.WriteLine("7 - Exit.");
+                Console.Write("Enter Your Choice: ");
                 choice = Int32.Parse(Console.ReadLine());
                 switch (choice)
                 {
@@ -103,7 +99,7 @@ namespace EAD_SumVariations
                     n++;
                 }
             }
-            Console.WriteLine("Summation = " + sum/n);
+            Console.WriteLine("Average = " + sum/n);
         }
         static void sum_variation5()
         {
@@ -120,6 +116,7 @@ namespace EAD_SumVariations
                 a = b;
                 b = c;
             }
+            Console.WriteLine();
         }
         static void sum_variation6()
         {
