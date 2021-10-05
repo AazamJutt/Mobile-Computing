@@ -14,7 +14,43 @@ namespace EAD_SumVariations
         }
         static void menu()
         {
-            Console.WriteLine("***********Different Types of Sums**********");
+            Console.WriteLine("*******************Menu*********************");
+            Console.WriteLine("1 - Sum.");
+            Console.WriteLine("2 - Square Sum.");
+            Console.WriteLine("3 - Summation of N numbers.");
+            Console.WriteLine("4 - Average of N Numbers.");
+            Console.WriteLine("5 - N numbers of Fibonacci Sequence.");
+            Console.WriteLine("6 - Sums of numbers Between a range.");
+            Console.WriteLine("7 - Exit.");
+            Console.Write("Enter Your Choice: ");
+            int choice = 0;
+            do
+            {
+                choice = Int32.Parse(Console.ReadLine());
+                switch (choice)
+                {
+                    case 1:
+                        sum_variation1();
+                        break;
+                    case 2:
+                        sum_variation2();
+                        break;
+                    case 3:
+                        sum_variation3();
+                        break;
+                    case 4:
+                        sum_variation4();
+                        break;
+                    case 5:
+                        sum_variation5();
+                        break;
+                    case 6:
+                        sum_variation6();
+                        break;
+                    default:
+                        break;
+                }
+            } while (choice > 0 && choice < 7);
         }
 
         static void sum_variation1()
