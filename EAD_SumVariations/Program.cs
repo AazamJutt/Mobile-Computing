@@ -6,10 +6,15 @@ namespace EAD_SumVariations
     {
         static void Main(string[] args)
         {
-            sum_variation1();
-            sum_variation2();
-            sum_variation3();
-            sum_variation4();
+            //sum_variation1();
+            //sum_variation2();
+            //sum_variation3();
+            //sum_variation4();
+            sum_variation6();
+        }
+        static void menu()
+        {
+            Console.WriteLine("***********Different Types of Sums**********");
         }
 
         static void sum_variation1()
@@ -34,7 +39,7 @@ namespace EAD_SumVariations
         }
         static void sum_variation3()
         {
-            //Calculates Square Sum
+            //Calculates Summation
             Console.WriteLine("***************Variation 3 - Summation*************");
             Console.WriteLine("Enter \'Single digit Numbers\' you want to sum in a Row i.e; 1 2 3: ");
             string numbers = Console.ReadLine();
@@ -48,8 +53,8 @@ namespace EAD_SumVariations
         }
         static void sum_variation4()
         {
-            //Calculates Square Sum
-            Console.WriteLine("***************Variation 5 - Average*************");
+            //Calculates average
+            Console.WriteLine("***************Variation 4 - Average*************");
             Console.WriteLine("Enter \'Single digit Numbers\' you want to find average of, in a Row i.e; 1 2 3: ");
             string numbers = Console.ReadLine();
             int sum = 0;
@@ -64,5 +69,37 @@ namespace EAD_SumVariations
             }
             Console.WriteLine("Summation = " + sum/n);
         }
+        static void sum_variation5()
+        {
+            //Finds Fibonacci sequeence
+            Console.WriteLine("***************Variation 5 - Fibonacci*************");
+            Console.Write("Enter number of Fibonacci Sequence you want to see: ");
+            int len = int.Parse(Console.ReadLine());
+            int a = 0, b = 1, c = 0;
+            Console.Write("Fibonacci Sequence: {0} {1}", a, b);
+            for (int i = 2; i < len; i++)
+            {
+                c = a + b;
+                Console.Write(" {0}", c);
+                a = b;
+                b = c;
+            }
+        }
+        static void sum_variation6()
+        {
+            //Calculates average
+            Console.WriteLine("***************Variation 6 - Find sum of numbers between a given Range**************");
+            Console.Write("Enter Lower Limit: ");
+            int ll = int.Parse(Console.ReadLine());
+            Console.Write("Enter Upper Limit: ");
+            int ul = int.Parse(Console.ReadLine());
+            int sum = 0;
+            for (int i =ll; i <= ul; i++)
+            {
+                sum += i;
+            }
+            Console.WriteLine("Sum = " + sum);
+        }
+
     }
 }
