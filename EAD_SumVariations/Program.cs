@@ -6,7 +6,17 @@ namespace EAD_SumVariations
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            sum_variation1();
+        }
+
+        static void sum_variation1()
+        {
+            Console.WriteLine("***************Sum Variation 1*************");
+            Console.Write("Enter Number A: ");
+            int a = Int32.Parse(Console.ReadLine());
+            Console.Write("Enter Number B: ");
+            int b = Int32.Parse(Console.ReadLine());
+            Console.WriteLine("Sum = " + (a + b));
         }
     }
 }
