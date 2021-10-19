@@ -17,22 +17,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         counter=(TextView) findViewById(R.id.counter);
-        SeekBar seekBar =(SeekBar) findViewById(R.id.seekBar);
+        seekBar =(SeekBar) findViewById(R.id.seekBar);
     }
 
     public void increment(View view) {
         int newVal = Integer.parseInt(counter.getText().toString())+1;
-        counter.setText(newVal);
+        counter.setText(Integer.toString(newVal));
         seekBar.setProgress(newVal);
     }
 
     public void decrement(View view) {
         int newVal = Integer.parseInt(counter.getText().toString())-1;
-        counter.setText(newVal);
+        counter.setText(Integer.toString(newVal));
         seekBar.setProgress(newVal);
     }
     public void reset(View view) {
-        counter.setText(0);
+        counter.setText("0");
         seekBar.setProgress(0);
     }
 }
