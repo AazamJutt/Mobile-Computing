@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/decrement"
+        android:layout_width="58dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="56dp"
+        android:onClick="decrement"
+        android:text="-"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/counter"
+        tools:text="-" />
+
+    <TextView
+        android:id="@+id/counter"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="176dp"
+        android:layout_marginTop="308dp"
+        android:capitalize="none"
+        android:text="0"
+        android:textSize="48sp"
+        app:autoSizeMaxTextSize="40sp"
+        app:autoSizeMinTextSize="40sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/increment"
+        android:layout_width="58dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="252dp"
+        android:layout_marginTop="56dp"
+        android:onClick="increment"
+        android:text="+"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/counter" />
+
+    <Button
+        android:id="@+id/reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="148dp"
+        android:layout_marginTop="28dp"
+        android:onClick="reset"
+        android:text="Reset"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/decrement" />
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="126dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="124dp"
+        android:layout_marginBottom="36dp"
+        android:clickable="false"
+        android:longClickable="false"
+        android:progress="0"
+        android:scrollbarSize="10dp"
+        android:scrollbarStyle="outsideInset"
+        app:layout_constraintBottom_toTopOf="@+id/counter"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
