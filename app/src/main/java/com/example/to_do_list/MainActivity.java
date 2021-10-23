@@ -20,8 +20,10 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -63,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     public void readData(String filename){
-        final File path = Environment.getExternalStorageDirectory();
+        final File path = getFilesDir();
         File file = new File(path, filename);
         if(!file.exists())
             return;
@@ -81,13 +83,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void writeData(String filename) throws IOException {
-        final File path = Environment.getExternalStorageDirectory();
+        final File path = getFilesDir();
         File file = new File(path,filename);
         if(!file.exists())
             file.createNewFile();
+        new FileWriter(file, false).close();
         PrintWriter writer = new PrintWriter(file);
         for(int i=0;i<activityList.size();i++){
-            writer.println(activityList.get(i).getActivityInfo()+","+activityList.get(i).getStaus());
+            writer.write(activityList.get(i).getActivityInfo()+","+activityList.get(i).getStaus()+"\n");
         }
         writer.close();
     }
