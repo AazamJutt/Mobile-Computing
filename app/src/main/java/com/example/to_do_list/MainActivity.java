@@ -5,6 +5,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.icu.number.ScientificNotation;
 import android.os.Bundle;
@@ -12,16 +13,22 @@ import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -33,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button addActivity;
     EditText textInfo;
     ArrayList<Activity> activityList;
+    private static final String FIELANAME = "todolist.txt";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,10 +51,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         addActivity = (Button) findViewById(R.id.addActivity);
         addActivity.setOnClickListener(this);
         textInfo = (EditText) findViewById(R.id.activityInfo);
-        readData("todoList.txt");
+        readData();
     }
 
     public void addActivity(String info,boolean status){
+        if(info.equals(""))
+            return;
         final View todoActivity = getLayoutInflater().inflate(R.layout.todo_activity,null,false);
         TextView activity = (TextView) todoActivity.findViewById(R.id.activity_info);
         CheckBox checkBox = (CheckBox) todoActivity.findViewById(R.id.activity_status);
@@ -58,50 +68,76 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         todoList.addView(todoActivity);
         ImageView imageClose = (ImageView)todoActivity.findViewById(R.id.image_remove);
         imageClose.setOnClickListener(v -> removeView(todoActivity));
-    }
-    private void removeView(View view){
-        todoList.removeView(view);
-    }
-
-
-    public void readData(String filename){
-        final File path = getFilesDir();
-        File file = new File(path, filename);
-        if(!file.exists())
-            return;
-        try (Scanner scanner = new Scanner(file)) {
-            while (scanner.hasNext()) {
-                String line = scanner.nextLine();
-                String[] fields = line.split(",");
-                Activity activity = new Activity(fields[0], Boolean.parseBoolean(fields[1]));
-                activityList.add(activity);
-                addActivity(activity.getActivityInfo(),activity.getStaus());
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                TextView activity = (TextView) todoActivity.findViewById(R.id.activity_info);
+                for(int i=0;i<activityList.size();i++){
+                    if(activityList.get(i).getActivityInfo().equals(activity.getText()))
+                        activityList.get(i).setStaus(true);
+                }
+                writeData();
             }
-        }catch (IOException e){
-            e.printStackTrace();
-        }
+        });
     }
 
-    public void writeData(String filename) throws IOException {
-        final File path = getFilesDir();
-        File file = new File(path,filename);
-        if(!file.exists())
-            file.createNewFile();
-        new FileWriter(file, false).close();
-        PrintWriter writer = new PrintWriter(file);
+    private void removeView(View view){
+        TextView activity = (TextView) view.findViewById(R.id.activity_info);
+        CheckBox checkBox = (CheckBox) view.findViewById(R.id.activity_status);
+
         for(int i=0;i<activityList.size();i++){
-            writer.write(activityList.get(i).getActivityInfo()+","+activityList.get(i).getStaus()+"\n");
+            if(activityList.get(i).getActivityInfo().equals(activity.getText()))
+                activityList.remove(i);
         }
-        writer.close();
+        todoList.removeView(view);
+        writeData();
     }
-    @Override
-    protected void onDestroy() {
+
+
+
+    public void readData(){
+        FileInputStream fis = null;
         try {
-            writeData("todoList.txt");
+            fis = openFileInput(MainActivity.FIELANAME);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr);
+            String text;
+            while((text = br.readLine())!=null){
+                String[] fields = text.split(",");
+                addActivity(fields[0],Boolean.parseBoolean(fields[1]));
+            }
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if(fis!=null){
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-        super.onDestroy();
+    }
+
+    public void writeData(){
+        FileOutputStream fos = null;
+        try {
+            fos = openFileOutput(MainActivity.FIELANAME,MODE_PRIVATE);
+            for(int i=0;i<activityList.size();i++){
+                String data = activityList.get(i).getActivityInfo()+","+activityList.get(i).getStaus()+"\n";
+                fos.write(data.getBytes());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if(fos!=null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     @Override
@@ -109,6 +145,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()){
             case R.id.addActivity:
                 addActivity(textInfo.getText().toString(),false);
+                writeData();
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + v.getId());
