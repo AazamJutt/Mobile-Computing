@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -48,6 +49,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         checkBox.setChecked(new_activity.getStaus());
         textInfo.setText("");
         todoList.addView(todoActivity);
+        ImageView imageClose = (ImageView)todoActivity.findViewById(R.id.image_remove);
+        imageClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeView(todoActivity);
+            }
+        });
+
+    }
+    private void removeView(View view){
+        todoList.removeView(view);
+
     }
 
     public void readData(String filename){
