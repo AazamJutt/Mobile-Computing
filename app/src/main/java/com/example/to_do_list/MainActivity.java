@@ -1,7 +1,11 @@
 package com.example.to_do_list;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.icu.number.ScientificNotation;
 import android.os.Bundle;
 import android.os.Environment;
@@ -12,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -25,12 +30,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     LinearLayout todoList;
     Button addActivity;
     EditText textInfo;
-
     ArrayList<Activity> activityList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         activityList = new ArrayList<>();
         todoList = (LinearLayout) findViewById(R.id.todoList);
         addActivity = (Button) findViewById(R.id.addActivity);
@@ -50,21 +55,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textInfo.setText("");
         todoList.addView(todoActivity);
         ImageView imageClose = (ImageView)todoActivity.findViewById(R.id.image_remove);
-        imageClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                removeView(todoActivity);
-            }
-        });
-
+        imageClose.setOnClickListener(v -> removeView(todoActivity));
     }
     private void removeView(View view){
         todoList.removeView(view);
-
     }
 
+
     public void readData(String filename){
-        final File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        final File path = Environment.getExternalStorageDirectory();
         File file = new File(path, filename);
         if(!file.exists())
             return;
@@ -82,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void writeData(String filename) throws IOException {
-        final File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        final File path = Environment.getExternalStorageDirectory();
         File file = new File(path,filename);
         if(!file.exists())
             file.createNewFile();
