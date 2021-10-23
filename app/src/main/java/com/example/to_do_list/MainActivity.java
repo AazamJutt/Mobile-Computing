@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Paint;
 import android.icu.number.ScientificNotation;
 import android.os.Bundle;
 import android.os.Environment;
@@ -63,20 +64,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Activity new_activity = new Activity(info,status);
         activityList.add(new_activity);
         activity.setText(new_activity.getActivityInfo());
+        if(status){
+            activity.setPaintFlags(activity.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        }
         checkBox.setChecked(new_activity.getStaus());
         textInfo.setText("");
         todoList.addView(todoActivity);
         ImageView imageClose = (ImageView)todoActivity.findViewById(R.id.image_remove);
         imageClose.setOnClickListener(v -> removeView(todoActivity));
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                TextView activity = (TextView) todoActivity.findViewById(R.id.activity_info);
-                for(int i=0;i<activityList.size();i++){
-                    if(activityList.get(i).getActivityInfo().equals(activity.getText()))
-                        activityList.get(i).setStaus(true);
+            public void onClick(View v) {
+                if(checkBox.isChecked()){
+                    TextView activity = (TextView) todoActivity.findViewById(R.id.activity_info);
+                    for(int i=0;i<activityList.size();i++){
+                        if(activityList.get(i).getActivityInfo().equals(activity.getText()))
+                            activityList.get(i).setStaus(true);
+                    }
+                    activity.setPaintFlags(activity.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    writeData();
                 }
-                writeData();
+                else{
+                    TextView activity = (TextView) todoActivity.findViewById(R.id.activity_info);
+                    for(int i=0;i<activityList.size();i++){
+                        if(activityList.get(i).getActivityInfo().equals(activity.getText()))
+                            activityList.get(i).setStaus(false);
+                    }
+                    activity.setPaintFlags(0);
+                    writeData();
+                }
             }
         });
     }
