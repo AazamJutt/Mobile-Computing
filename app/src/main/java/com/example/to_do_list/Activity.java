@@ -1,12 +1,16 @@
 package com.example.to_do_list;
 
+import java.util.Calendar;
+
 public class Activity {
     String activityInfo;
-    boolean staus;
+    String date;
+    boolean status;
 
-    public Activity(String activityInfo, boolean staus) {
+    public Activity(String activityInfo,String date, boolean staus) {
         this.activityInfo = activityInfo;
-        this.staus = staus;
+        this.date = date;
+        this.status = staus;
     }
 
     public String getActivityInfo() {
@@ -14,7 +18,7 @@ public class Activity {
     }
 
     public boolean getStaus() {
-        return staus;
+        return status;
     }
 
     public void setActivityInfo(String activityInfo) {
@@ -22,6 +26,14 @@ public class Activity {
     }
 
     public void setStaus(boolean staus) {
-        this.staus = staus;
+        this.status = staus;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

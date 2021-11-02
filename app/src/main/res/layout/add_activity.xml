@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/addActivity3"
+        android:id="@+id/addToList"
         android:layout_width="168dp"
         android:layout_height="49dp"
         android:layout_marginStart="28dp"
@@ -40,7 +40,7 @@
         android:text="Add Date"
         app:cornerRadius="?attr/dialogCornerRadius"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activityInfo2" />
+        app:layout_constraintTop_toBottomOf="@+id/activityInfo" />
 
     <EditText
         android:id="@+id/dateText"
@@ -60,7 +60,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/activityInfo2"
+        android:id="@+id/activityInfo"
         android:layout_width="351dp"
         android:layout_height="51dp"
         android:layout_marginTop="160dp"
@@ -95,7 +95,7 @@
         android:text="Date"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activityInfo2" />
+        app:layout_constraintTop_toBottomOf="@+id/activityInfo" />
 
     <TextView
         android:id="@+id/textView4"
