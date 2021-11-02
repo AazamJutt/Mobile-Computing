@@ -1,6 +1,7 @@
 package com.example.to_do_list;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -12,6 +13,7 @@ import android.icu.number.ScientificNotation;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -40,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     LinearLayout todoList;
     Button addActivity;
     EditText textInfo;
-    ArrayList<Activity> activityList;
+    public static ArrayList<Activity> activityList;
     private static final String FIELANAME = "todolist.txt";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textInfo = (EditText) findViewById(R.id.activityInfo);
         readData();
     }
+    public void goToAddActivity(View view) {
+        Intent intent = new Intent(this, AddActivity.class);
+        startActivity(intent);
+    }
+
+    private void setMargins (View view, int left, int top, int right, int bottom) {
+        if (view.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+            p.setMargins(left, top, right, bottom);
+            view.requestLayout();
+        }
+    }
 
     public void addActivity(String info,boolean status){
         if(info.equals(""))
@@ -61,8 +75,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         final View todoActivity = getLayoutInflater().inflate(R.layout.todo_activity,null,false);
         TextView activity = (TextView) todoActivity.findViewById(R.id.activity_info);
         CheckBox checkBox = (CheckBox) todoActivity.findViewById(R.id.activity_status);
+        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) todoActivity.getLayoutParams();
         Activity new_activity = new Activity(info,status);
         activityList.add(new_activity);
+        int n = 20;
+        setMargins(todoActivity,n,n,n,n);
         activity.setText(new_activity.getActivityInfo());
         if(status){
             activity.setPaintFlags(activity.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);

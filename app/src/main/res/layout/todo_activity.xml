@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:layout_marginBottom="20dp"
+    android:background="@drawable/round_grey"
     android:orientation="horizontal"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp">
+    android:paddingTop="15dp"
+    android:paddingBottom="15dp">
 
     <CheckBox
         android:id="@+id/activity_status"
@@ -29,9 +33,9 @@
         android:id="@+id/image_remove"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="5dp"
         android:layout_gravity="center_vertical"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="10dp"
         android:src="@drawable/ic_close"
         app:tint="@color/black" />
 </LinearLayout>
