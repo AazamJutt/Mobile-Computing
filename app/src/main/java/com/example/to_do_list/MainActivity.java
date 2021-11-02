@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     LinearLayout todoList;
     Button addActivity;
+    Button shareReport;
     public static ArrayList<Activity> activityList;
     public static final String FIELANAME = "todolist.txt";
     @Override
@@ -36,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         activityList = new ArrayList<>();
         todoList = (LinearLayout) findViewById(R.id.todoList);
         addActivity = (Button) findViewById(R.id.addActivity);
+        shareReport = findViewById(R.id.btnShare);
+        shareReport.setOnClickListener(this);
         addActivity.setOnClickListener(this);
         readData();
     }
@@ -44,6 +47,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
     }
 
+    private String createReport(){
+        StringBuilder str = new StringBuilder();
+        for (Activity activity: activityList
+             ) {
+            str.append("Info: ").append(activity.getActivityInfo());
+            str.append(" Due-Date: ").append(activity.getDate());
+            str.append(" Status: ").append((activity.getStaus())?"Done":"Pending");
+            str.append("\n");
+        }
+        return str.toString();
+    }
     private void setMargins (View view, int left, int top, int right, int bottom) {
         if (view.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
             ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
@@ -164,6 +178,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.addActivity:
                 Intent intent = new Intent(getApplicationContext(), AddActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.btnShare:
+                Intent intent2 = new Intent(); intent2.setAction(Intent.ACTION_SEND);
+                intent2.setType("text/plain");
+                intent2.putExtra(Intent.EXTRA_TEXT, createReport() );
+                startActivity(Intent.createChooser(intent2, "Share via"));
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + v.getId());
