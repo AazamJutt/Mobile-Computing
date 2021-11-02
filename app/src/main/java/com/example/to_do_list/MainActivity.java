@@ -26,8 +26,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     LinearLayout todoList;
     Button addActivity;
-    EditText textInfo;
-    EditText dateText;
     public static ArrayList<Activity> activityList;
     public static final String FIELANAME = "todolist.txt";
     @Override
@@ -39,8 +37,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         todoList = (LinearLayout) findViewById(R.id.todoList);
         addActivity = (Button) findViewById(R.id.addActivity);
         addActivity.setOnClickListener(this);
-        textInfo = (EditText) findViewById(R.id.activityInfo);
-        dateText = (EditText) findViewById(R.id.dateText);
         readData();
     }
     public void goToAddActivity(View view) {
@@ -74,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         checkBox.setChecked(new_activity.getStaus());
         date.setText(dateString);
-        textInfo.setText("");
+        //textInfo.setText("");
         todoList.addView(todoActivity);
         ImageView imageClose = (ImageView)todoActivity.findViewById(R.id.image_remove);
         imageClose.setOnClickListener(v -> removeView(todoActivity));
@@ -168,10 +164,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.addActivity:
                 Intent intent = new Intent(getApplicationContext(), AddActivity.class);
                 startActivity(intent);
-                break;
-            case R.id.addToList:
-                addActivity(textInfo.getText().toString(),dateText.getText().toString(),false);
-                writeData();
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + v.getId());

@@ -9,28 +9,48 @@
 
     <Button
         android:id="@+id/addActivity"
-        android:layout_width="58dp"
-        android:layout_height="58dp"
-        android:layout_marginStart="336dp"
-        android:layout_marginBottom="96dp"
+        android:layout_width="168dp"
+        android:layout_height="49dp"
+        android:layout_marginEnd="26dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/circle_button"
         android:drawableRight="@drawable/ic_add"
+        android:text="Add"
         app:cornerRadius="?attr/dialogCornerRadius"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btnShare"
+        android:layout_width="168dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/circle_button"
+        android:drawableRight="@drawable/ic_share"
+        android:text="Share"
+        app:cornerRadius="?attr/dialogCornerRadius"
+        app:layout_constraintBottom_toBottomOf="@+id/addActivity"
+        app:layout_constraintEnd_toStartOf="@+id/addActivity"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/addActivity" />
 
     <ScrollView
-        android:layout_width="387dp"
-        android:layout_height="537dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginRight="10dp"
+        android:id="@+id/scrollView2"
+        android:layout_width="378dp"
+        android:layout_height="664dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="15dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/addActivity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:id="@+id/todoList"
@@ -38,16 +58,5 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" />
     </ScrollView>
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="68dp"
-        android:text="Todo List"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

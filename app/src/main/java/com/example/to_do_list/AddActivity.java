@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,23 +19,55 @@ import java.util.Date;
 
 public class AddActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
-    Button datepicker;
+    Button datePicker;
     Button addActivity;
     EditText dateText;
+    EditText activityText;
+    Button cancel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_activity);
-        datepicker = findViewById(R.id.addDate);
+        datePicker = findViewById(R.id.addDate);
+        activityText = findViewById(R.id.activityInfo);
+        cancel = findViewById(R.id.cancelBtn);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goBack();
+            }
+        });
         dateText = findViewById(R.id.dateText);
         dateText.setHint(DateFormat.getDateInstance().format(new Date()));
         addActivity = findViewById(R.id.addToList);
         addActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Activity new_activity = new Activity(activityText.getText().toString(),dateText.getText().toString(),false);
+                MainActivity.activityList.add(new_activity);
+                FileOutputStream fos = null;
+                try {
+                    fos = openFileOutput(MainActivity.FIELANAME,MODE_PRIVATE);
+                    for (Activity activity:MainActivity.activityList) {
+                        String data = activity.getActivityInfo()+","+activity.getDate()+','+activity.getStaus()+'\n';
+                        fos.write(data.getBytes());
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if(fos!=null) {
+                        try {
+                            fos.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                System.out.println(MainActivity.activityList);
+                goBack();
+            }
         });
-        datepicker.setOnClickListener(new View.OnClickListener() {
+        datePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogFragment picker = new DatePickerFragment();
@@ -43,6 +76,11 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
         });
     }
 
+    private void goBack(){
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         Calendar calendar = Calendar.getInstance();
