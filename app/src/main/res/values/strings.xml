@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Makharij ul Huruf</string>
+    <string name="app_name">مخــارج لحـروف</string>
+    <string name="question">The sound of following letter is produced from?</string>
 </resources>
