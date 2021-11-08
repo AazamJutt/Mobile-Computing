@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        letter = findViewById(R.id.letter);
-        letter.setText(letters[0]);
+        //letter = findViewById(R.id.letter);
+        //letter.setText(letters[0]);
     }
 }
