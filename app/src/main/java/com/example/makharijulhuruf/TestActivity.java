@@ -60,6 +60,7 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onStart() {
         currentNumber=1;
+        report = new Report();
         generateMCQ();
         super.onStart();
     }
