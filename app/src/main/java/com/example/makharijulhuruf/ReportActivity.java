@@ -55,8 +55,9 @@ public class ReportActivity extends AppCompatActivity {
     private String createReport(){
         StringBuilder str = new StringBuilder();
         str.append("Hey There, I attempted a test in Makharij ul Huruf app.\n");
-        str.append("with a Score: "+report.getCorrect()+"\n");
+        str.append("With a Score: "+report.getCorrect()+"\n");
         str.append("Out of: "+report.getTotal()+"\n");
+        str.append("and Percentage: "+percentage.getText()+"\n");
         return str.toString();
 
     }
