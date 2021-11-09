@@ -2,7 +2,9 @@ package com.example.makharijulhuruf;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -15,13 +17,15 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-public class TestActivity extends AppCompatActivity {
+public class TestActivity extends AppCompatActivity implements View.OnClickListener {
 
     HashMap<String,String> map;
     Button option1;
     Button option2;
     Button option3;
     Button option4;
+    Button nextBtn;
+    String correctAns;
     TextView harf;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,29 +33,49 @@ public class TestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_test);
         map = new HashMap<>();
         harf = findViewById(R.id.letter);
+        nextBtn = findViewById(R.id.nextBtn);
+        nextBtn.setOnClickListener(this);
         option1 = findViewById(R.id.option1);
         option2 = findViewById(R.id.option2);
         option3 = findViewById(R.id.option3);
         option4 = findViewById(R.id.option4);
+        option1.setOnClickListener(this);
+        option2.setOnClickListener(this);
+        option3.setOnClickListener(this);
+        option4.setOnClickListener(this);
         setupMap();
 
     }
 
     @Override
     protected void onStart() {
-        harf.setText(getRandomKey());
-        getRandomOptions();
+        generateMCQ();
         super.onStart();
     }
-    private void getRandomOptions(){
+    private ArrayList<String> getRandomUniqueOptions(String key){
         List<String> vals = new ArrayList<>(map.values());
         Random rand = new Random();
         ArrayList<String> options = new ArrayList<>();
-        options.add(map.get(harf.getText().toString()));
-        options.add(vals.get(rand.nextInt(vals.size())));
-        options.add(vals.get(rand.nextInt(vals.size())));
-        options.add(vals.get(rand.nextInt(vals.size())));
+        options.add(map.get(key));
+        for(int i=0;i<3;i++){
+            String tempOpt = vals.get(rand.nextInt(vals.size()));
+            while(options.contains(tempOpt)){
+                tempOpt = vals.get(rand.nextInt(vals.size()));
+            }
+            options.add(tempOpt);
+        }
         Collections.shuffle(options);
+        return options;
+    }
+    private void generateMCQ(){
+        option1.setBackgroundColor(Color.GRAY);
+        option2.setBackgroundColor(Color.GRAY);
+        option3.setBackgroundColor(Color.GRAY);
+        option4.setBackgroundColor(Color.GRAY);
+        String key = getRandomKey();
+        ArrayList<String> options = getRandomUniqueOptions(key);
+        correctAns = map.get(key);
+        harf.setText(key);
         option1.setText(options.get(0));
         option2.setText(options.get(1));
         option3.setText(options.get(2));
@@ -61,6 +85,16 @@ public class TestActivity extends AppCompatActivity {
         List<String> keysAsArray = new ArrayList<>(map.keySet());
         Random rand = new Random();
         return keysAsArray.get(rand.nextInt(keysAsArray.size()));
+    }
+    private void viewCorrectOption(){
+        if(option1.getText().equals(correctAns))
+            option1.setBackgroundColor(Color.rgb(74, 194, 45));
+        if(option2.getText().equals(correctAns))
+            option2.setBackgroundColor(Color.rgb(74, 194, 45));
+        if(option3.getText().equals(correctAns))
+            option3.setBackgroundColor(Color.rgb(74, 194, 45));
+        if(option4.getText().equals(correctAns))
+            option4.setBackgroundColor(Color.rgb(74, 194, 45));
     }
     private void setupMap(){
         map.put("أ","End of Throat");
@@ -92,5 +126,23 @@ public class TestActivity extends AppCompatActivity {
         map.put("م","Outer part of both lips touch each other");
         map.put("و","Rounding both lips and not closing the mouth");
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.nextBtn:
+                generateMCQ();
+                break;
+            default:
+                if(((Button)v).getText().equals(correctAns)){
+                    v.setBackgroundColor(Color.rgb(74, 194, 45));
+                }
+                else {
+                    v.setBackgroundColor(Color.rgb(191, 48, 29));
+                    viewCorrectOption();
+                }
+                break;
+        }
     }
 }
