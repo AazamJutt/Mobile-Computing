@@ -12,6 +12,9 @@
         android:textAlignment="viewStart"
         android:theme="@style/Theme.MakharijUlHuruf">
         <activity
+            android:name=".ReportActivity"
+            android:exported="false" />
+        <activity
             android:name=".LearnActivity"
             android:exported="false" />
         <activity

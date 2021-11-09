@@ -1,9 +1,13 @@
 package com.example.makharijulhuruf;
 
+import static java.lang.Thread.*;
+
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -27,12 +31,18 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
     Button nextBtn;
     String correctAns;
     TextView harf;
+    TextView counter;
+    Report report;
+    int currentNumber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
         map = new HashMap<>();
+        report = new Report();
+        currentNumber = 1;
         harf = findViewById(R.id.letter);
+        counter = findViewById(R.id.counterText);
         nextBtn = findViewById(R.id.nextBtn);
         nextBtn.setOnClickListener(this);
         option1 = findViewById(R.id.option1);
@@ -49,6 +59,7 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onStart() {
+        currentNumber=1;
         generateMCQ();
         super.onStart();
     }
@@ -68,10 +79,23 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
         return options;
     }
     private void generateMCQ(){
+        if(currentNumber==11){
+            Intent intent = new Intent(getApplicationContext(),ReportActivity.class);
+            intent.putExtra("Report",report);
+            startActivity(intent);
+            return;
+        }
+        String temp = currentNumber +"/10";
+        counter.setText(temp);
         option1.setBackgroundColor(Color.GRAY);
         option2.setBackgroundColor(Color.GRAY);
         option3.setBackgroundColor(Color.GRAY);
         option4.setBackgroundColor(Color.GRAY);
+
+        option1.setClickable(true);
+        option2.setClickable(true);
+        option3.setClickable(true);
+        option4.setClickable(true);
         String key = getRandomKey();
         ArrayList<String> options = getRandomUniqueOptions(key);
         correctAns = map.get(key);
@@ -95,6 +119,12 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
             option3.setBackgroundColor(Color.rgb(74, 194, 45));
         if(option4.getText().equals(correctAns))
             option4.setBackgroundColor(Color.rgb(74, 194, 45));
+    }
+    private void disableOptions(){
+        option1.setClickable(false);
+        option2.setClickable(false);
+        option3.setClickable(false);
+        option4.setClickable(false);
     }
     private void setupMap(){
         map.put("أ","End of Throat");
@@ -137,11 +167,22 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 if(((Button)v).getText().equals(correctAns)){
                     v.setBackgroundColor(Color.rgb(74, 194, 45));
+                    report.addRecord(harf.getText().toString(),correctAns,true);
+                    disableOptions();
                 }
                 else {
                     v.setBackgroundColor(Color.rgb(191, 48, 29));
                     viewCorrectOption();
+                    report.addRecord(harf.getText().toString(),correctAns,false);
+                    disableOptions();
                 }
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        currentNumber++;
+                        generateMCQ();
+                    }
+                }, 2000);
                 break;
         }
     }
