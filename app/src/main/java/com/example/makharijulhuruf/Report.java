@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class Report implements Parcelable {
     ArrayList<String> question;
     ArrayList<String> answers;
+    ArrayList<String> chosen;
     int total;
     int correct;
     int inCorrect;
@@ -17,6 +18,7 @@ public class Report implements Parcelable {
     public Report() {
         question = new ArrayList<>();
         answers = new ArrayList<>();
+        chosen = new ArrayList<>();
         total = 0;
         correct = 0;
         inCorrect = 0;
@@ -25,6 +27,7 @@ public class Report implements Parcelable {
     protected Report(Parcel in) {
         question = in.createStringArrayList();
         answers = in.createStringArrayList();
+        chosen = in.createStringArrayList();
         total = in.readInt();
         correct = in.readInt();
         inCorrect = in.readInt();
@@ -42,15 +45,28 @@ public class Report implements Parcelable {
         }
     };
 
-    public void addRecord(String ques, String ans, boolean result){
+    public void addRecord(String ques, String ans, String choice, boolean result){
         question.add(ques);
         answers.add(ans);
+        chosen.add(choice);
         if(result){
             correct++;
         }
         else
             inCorrect++;
         total++;
+    }
+
+    public ArrayList<String> getQuestion() {
+        return question;
+    }
+
+    public ArrayList<String> getAnswers() {
+        return answers;
+    }
+
+    public ArrayList<String> getChosen() {
+        return chosen;
     }
 
     public int getTotal() {
@@ -80,6 +96,7 @@ public class Report implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeStringList(question);
         dest.writeStringList(answers);
+        dest.writeStringList(chosen);
         dest.writeInt(total);
         dest.writeInt(correct);
         dest.writeInt(inCorrect);

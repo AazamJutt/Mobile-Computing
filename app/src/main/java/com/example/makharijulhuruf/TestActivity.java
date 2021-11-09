@@ -167,13 +167,13 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 if(((Button)v).getText().equals(correctAns)){
                     v.setBackgroundColor(Color.rgb(74, 194, 45));
-                    report.addRecord(harf.getText().toString(),correctAns,true);
+                    report.addRecord(harf.getText().toString(),correctAns,((Button) v).getText().toString(),true);
                     disableOptions();
                 }
                 else {
                     v.setBackgroundColor(Color.rgb(191, 48, 29));
                     viewCorrectOption();
-                    report.addRecord(harf.getText().toString(),correctAns,false);
+                    report.addRecord(harf.getText().toString(),correctAns,((Button) v).getText().toString(),false);
                     disableOptions();
                 }
                 new Handler().postDelayed(new Runnable() {
