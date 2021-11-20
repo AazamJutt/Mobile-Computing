@@ -16,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayList<String> parahs;
     ArrayList<String> surahs;
+    ArrayList<Integer> verseCount;
+
     TabLayout tabs;
     ListView surahList;
     QDH quranIndexes;
@@ -32,11 +34,16 @@ public class MainActivity extends AppCompatActivity {
 
         parahs = quranIndexes.getParahNames();
         surahs = quranIndexes.getSurahNames();
+        verseCount = new ArrayList<>();
+
+        for (int i=0;i<surahs.size();i++){
+            verseCount.add(quranIndexes.getSurahVerses(i));
+        }
 
         surahList = findViewById(R.id.listView);
         tabs = findViewById(R.id.tabLayout);
         parahArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,parahs);
-        surahArrayAdapter = new SurahArrayAdapter(this,surahs);
+        surahArrayAdapter = new SurahArrayAdapter(this,surahs,verseCount);
         surahList.setAdapter(surahArrayAdapter);
 
         surahList.setOnItemClickListener((parent, view, position, id) -> {

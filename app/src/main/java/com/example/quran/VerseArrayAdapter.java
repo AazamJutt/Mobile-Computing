@@ -23,7 +23,7 @@ public class VerseArrayAdapter extends ArrayAdapter<String> {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater=context.getLayoutInflater();
         View singleEntityView=inflater.inflate(R.layout.verse_view, null,true);
-        TextView surahName = singleEntityView.findViewById(R.id.verseText);
+        TextView surahName = singleEntityView.findViewById(R.id.verse_name);
         surahName.setText(verses.get(position));
         return singleEntityView;
     }
