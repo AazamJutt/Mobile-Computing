@@ -570,7 +570,7 @@ public class QDH {
     }
     public static int getParahVerses(int parahNumber) {
         if(parahNumber==29){
-            return 6348 - PSP[parahNumber];
+            return 6349 - PSP[parahNumber];
         }
         return PSP[parahNumber+1]-PSP[parahNumber];
     }
