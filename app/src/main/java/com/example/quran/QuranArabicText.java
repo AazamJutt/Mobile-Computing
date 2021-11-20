@@ -1,6 +1,7 @@
 package com.example.quran;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -6357,19 +6358,12 @@ public class QuranArabicText {
                     "مِنۡ  شَرِّ الۡوَسۡوَاسِ ۬ۙ  الۡخَنَّاسِ ۪ۙ﴿۴﴾",
                     "الَّذِیۡ یُوَسۡوِسُ فِیۡ صُدُوۡرِ النَّاسِ ۙ﴿۵﴾",
                     "مِنَ الۡجِنَّۃِ وَ النَّاسِ ٪﴿۶﴾",
-
             };
 
     // String[] subset = Arrays.copyOfRange(QuranArabicText, 10, 20);
 
-    public static String[] GetData(int StartIndex, int EndIndex) {
-        List<String> listTemp = new ArrayList<>();
-
-        for (int i = StartIndex; i < EndIndex; i++) {
-            listTemp.add(QuranArabicText[i].toString());
-        }
-        String[] list = listTemp.toArray(new String[]{});
-
+    public static ArrayList<String> GetData(int StartIndex, int EndIndex) {
+        ArrayList<String> list = new ArrayList<>(Arrays.asList(Arrays.copyOfRange(QuranArabicText, StartIndex, EndIndex)));
         return list;
     }
 

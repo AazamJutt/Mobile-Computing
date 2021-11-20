@@ -68,7 +68,7 @@ public class BySurahFragment extends Fragment {
         surahList.setAdapter(new SurahArrayAdapter(getActivity(),surahs, verseCounts));
         surahList.setOnItemClickListener((parent, view, position, id) -> {
             Intent intent = new Intent(getActivity(),VerseActivity.class);
-            ArrayList<String> verses = new ArrayList<>(Arrays.asList(QuranArabicText.GetData(QDH.getSurahStart(position)-1,QDH.getSurahStart(position+1)-1)));
+            ArrayList<String> verses = QuranArabicText.GetData(QDH.getSurahStart(position)-1,QDH.getSurahStart(position)+QDH.getSurahVerses(position));
             intent.putStringArrayListExtra("verses",verses);
             startActivity(intent);
         });

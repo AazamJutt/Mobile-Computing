@@ -21,8 +21,8 @@ public class ByParahFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "surah";
-    private static final String ARG_PARAM2 = "surahVerseCount";
+    private static final String ARG_PARAM1 = "parah";
+    private static final String ARG_PARAM2 = "parahVerseCount";
 
     // TODO: Rename and change types of parameters
     private ArrayList<String> parahs;
@@ -41,10 +41,10 @@ public class ByParahFragment extends Fragment {
      * @return A new instance of fragment BySurahFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BySurahFragment newInstance(ArrayList<String> surahs,ArrayList<Integer> verseCounts) {
-        BySurahFragment fragment = new BySurahFragment();
+    public static ByParahFragment newInstance(ArrayList<String> parahs,ArrayList<Integer> verseCounts) {
+        ByParahFragment fragment = new ByParahFragment();
         Bundle args = new Bundle();
-        args.putStringArrayList(ARG_PARAM1, surahs);
+        args.putStringArrayList(ARG_PARAM1, parahs);
         args.putIntegerArrayList(ARG_PARAM2, verseCounts);
         fragment.setArguments(args);
         return fragment;
@@ -62,12 +62,12 @@ public class ByParahFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View layout =  inflater.inflate(R.layout.fragment_by_surah, container, false);
+        View layout =  inflater.inflate(R.layout.fragment_by_parah, container, false);
         parahList = layout.findViewById(R.id.parahList);
         parahList.setAdapter(new SurahArrayAdapter(getActivity(), parahs, verseCounts));
         parahList.setOnItemClickListener((parent, view, position, id) -> {
             Intent intent = new Intent(getActivity(),VerseActivity.class);
-            ArrayList<String> verses = new ArrayList<>(Arrays.asList(QuranArabicText.GetData(QDH.getParahStart(position)-1,QDH.getParahStart(position+1)-1)));
+            ArrayList<String> verses = QuranArabicText.GetData(QDH.getParahStart(position)-1,QDH.getParahStart(position)+QDH.getParahVerses(position));
             intent.putStringArrayListExtra("verses",verses);
             startActivity(intent);
         });

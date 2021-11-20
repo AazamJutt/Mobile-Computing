@@ -29,17 +29,21 @@ public class FragmentAdapter extends FragmentStateAdapter {
         for (int i=0;i<surahs.size();i++){
             surahVerses.add(QDH.getSurahVerses(i));
         }
+
         parahVerses = new ArrayList<>();
-        for (int i=0;i<parahs.size()-1;i++){
-            parahVerses.add(QDH.getParahVerses(i));
+        for (int i=0;i<parahs.size();i++){
+            parahVerses.add(QDH.getParahVerses(i)-1);
         }
     }
 
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        if(position==1){
-            return ByParahFragment.newInstance(parahs,parahVerses);
+        switch (position){
+            case 0:
+                return BySurahFragment.newInstance(surahs,surahVerses);
+            case 1:
+                return ByParahFragment.newInstance(parahs,parahVerses);
         }
         return BySurahFragment.newInstance(surahs,surahVerses);
     }

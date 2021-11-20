@@ -38,7 +38,7 @@
                 android:layout_weight="0.08"
                 android:fontFamily="@font/noorehuda"
                 android:gravity="center"
-                android:paddingTop="30sp"
+                android:paddingTop="25sp"
                 android:text="View"
                 android:textColor="@android:color/holo_green_dark"
                 android:textSize="48sp"
