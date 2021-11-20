@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Quran</string>
+    <string name="tab_1">Parahs</string>
+    <string name="tab_2">Surahs </string>
+</resources>
