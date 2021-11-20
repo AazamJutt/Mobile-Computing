@@ -7,7 +7,7 @@ import java.util.List;
 
 
 public class QDH {
-    public int [] PSP = {
+    public static int [] PSP = {
             1,
             150,
             261,
@@ -39,7 +39,7 @@ public class QDH {
             5306,
             5748,
     };
-    public int[] SSP = {
+    public static int[] SSP = {
             1,
             8,
             295,
@@ -155,7 +155,7 @@ public class QDH {
             6336,
             6342,
     };
-    public int[] surahAyatCount = {
+    public static int[] surahAyatCount = {
             7,
             286,
             200,
@@ -271,7 +271,7 @@ public class QDH {
             5,
             6
     };
-    public String[] englishParahName = {"Alif Lam Meem",
+    public static String[] englishParahName = {"Alif Lam Meem",
             "Sayaqool ",
             "Tilkal Rusull",
             "Lan Tana Loo",
@@ -302,7 +302,7 @@ public class QDH {
             "Tabarakallazi",
             "Amma Yatasa'aloon",
     };
-    public String[] parahName = {"الم ",
+    public static String[] parahName = {"الم ",
             "سیقول ",
             "تلک الرسل ",
             "لن تنالوالبر",
@@ -333,7 +333,7 @@ public class QDH {
             "تبارک الذی ",
             "عم یتسآءلون ",
     };
-    public String[] englishSurahNames = {"Al-Fatihah",
+    public static String[] englishSurahNames = {"Al-Fatihah",
             "Al-Baqara ",
             "Al-i'Imran ",
             "An-Nisaa ",
@@ -448,7 +448,7 @@ public class QDH {
             "Al-Falaq ",
             "Al-Nas ",
     };
-    public String[] urduSurahNames = {
+    public static String[] urduSurahNames = {
             "الفاتحۃ",
             "البقرۃ",
             "آل عمران",
@@ -565,28 +565,24 @@ public class QDH {
             " النَّاس"
     };
 
-    public int getSurahVerses(int surahNumber) {
+    public static int getSurahVerses(int surahNumber) {
         return surahAyatCount[surahNumber];
     }
-
-    public List<String> GetSurahNames() {
-        List<String> list = null;
-        for (int index = 0; index < urduSurahNames.length; ++index)
-            list.add(urduSurahNames[index]);
-        return list;
+    public static int getParahVerses(int parahNumber) {
+        return PSP[parahNumber+1]-PSP[parahNumber];
     }
 
-    public int getSurahStart(int surahNumber) {
+    public static int getSurahStart(int surahNumber) {
         return SSP[surahNumber];
     }
 
-    public ArrayList<String> getParahNames(){
-        return new ArrayList<>(Arrays.asList(this.parahName));
+    public static ArrayList<String> getParahNames(){
+        return new ArrayList<>(Arrays.asList(parahName));
     }
-    public ArrayList<String> getSurahNames(){
-        return new ArrayList<>(Arrays.asList(this.urduSurahNames));
+    public static ArrayList<String> getSurahNames(){
+        return new ArrayList<>(Arrays.asList(urduSurahNames));
     }
-    public int getParahStart(int parahNumber) {
+    public static int getParahStart(int parahNumber) {
         return PSP[parahNumber];
     }
 }

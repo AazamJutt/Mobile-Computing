@@ -7,7 +7,7 @@ import java.util.List;
  * Created by Haq Nawaz on 1/25/2016.
  */
 public class QuranArabicText {
-    public String[] QuranArabicText = new String[]
+    public static String[] QuranArabicText = new String[]
             {
                     "بِسۡمِ اللّٰہِ الرَّحۡمٰنِ الرَّحِیۡمِ",
                     "اَلۡحَمۡدُ لِلّٰہِ رَبِّ الۡعٰلَمِیۡنَ ۙ﴿۱﴾",
@@ -6362,7 +6362,7 @@ public class QuranArabicText {
 
     // String[] subset = Arrays.copyOfRange(QuranArabicText, 10, 20);
 
-    public String[] GetData(int StartIndex, int EndIndex) {
+    public static String[] GetData(int StartIndex, int EndIndex) {
         List<String> listTemp = new ArrayList<>();
 
         for (int i = StartIndex; i < EndIndex; i++) {
