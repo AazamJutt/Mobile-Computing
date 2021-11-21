@@ -12,10 +12,12 @@ import java.util.ArrayList;
 public class VerseArrayAdapter extends ArrayAdapter<String> {
     Activity context;
     ArrayList<String> verses;
-    public VerseArrayAdapter(Activity context,ArrayList<String> verses) {
+    int index;
+    public VerseArrayAdapter(Activity context,ArrayList<String> verses,int index) {
         super(context, R.layout.verse_view, verses);
         this.context = context;
         this.verses = verses;
+        this.index = index;
     }
 
 
@@ -24,6 +26,8 @@ public class VerseArrayAdapter extends ArrayAdapter<String> {
         LayoutInflater inflater=context.getLayoutInflater();
         View singleEntityView=inflater.inflate(R.layout.verse_view, null,true);
         TextView surahName = singleEntityView.findViewById(R.id.verse_name);
+        TextView index = singleEntityView.findViewById(R.id.index);
+        index.setText("| "+this.index+"."+(position+1)+" |");
         surahName.setText(verses.get(position));
         return singleEntityView;
     }

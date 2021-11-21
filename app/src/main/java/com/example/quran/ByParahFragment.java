@@ -69,6 +69,7 @@ public class ByParahFragment extends Fragment {
             Intent intent = new Intent(getActivity(),VerseActivity.class);
             ArrayList<String> verses = QuranArabicText.GetData(QDH.getParahStart(position)-1,QDH.getParahStart(position)+QDH.getParahVerses(position)-1);
             intent.putStringArrayListExtra("verses",verses);
+            intent.putExtra("index",position);
             startActivity(intent);
         });
 

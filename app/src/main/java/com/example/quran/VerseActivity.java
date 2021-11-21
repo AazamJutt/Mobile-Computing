@@ -19,8 +19,9 @@ public class VerseActivity extends AppCompatActivity {
 
         verses = findViewById(R.id.verses);
         versesList = getIntent().getStringArrayListExtra("verses");
+        int index = getIntent().getIntExtra("index",0)+1;
 
-        verses.setAdapter(new VerseArrayAdapter(this,versesList));
+        verses.setAdapter(new VerseArrayAdapter(this,versesList,index));
 
     }
 }

@@ -38,6 +38,7 @@ public class QDH {
             5160,
             5306,
             5748,
+            6349
     };
     public static int[] SSP = {
             1,
@@ -154,6 +155,7 @@ public class QDH {
             6331,
             6336,
             6342,
+            6349
     };
     public static int[] surahAyatCount = {
             7,
@@ -569,9 +571,6 @@ public class QDH {
         return surahAyatCount[surahNumber];
     }
     public static int getParahVerses(int parahNumber) {
-        if(parahNumber==29){
-            return 6349 - PSP[parahNumber];
-        }
         return PSP[parahNumber+1]-PSP[parahNumber];
     }
 
