@@ -24,10 +24,14 @@ public class VerseArrayAdapter extends ArrayAdapter<String> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater=context.getLayoutInflater();
+        if(verses.get(position).equals(QuranArabicText.QuranArabicText[0])){
+            View bismillah=inflater.inflate(R.layout.bismillah_view, null,true);
+            return bismillah;
+        }
         View singleEntityView=inflater.inflate(R.layout.verse_view, null,true);
         TextView surahName = singleEntityView.findViewById(R.id.verse_name);
         TextView index = singleEntityView.findViewById(R.id.index);
-        index.setText("| "+this.index+"."+(position+1)+" |");
+        index.setText("◀"+this.index+"."+(position+1)+"▶");
         surahName.setText(verses.get(position));
         return singleEntityView;
     }
