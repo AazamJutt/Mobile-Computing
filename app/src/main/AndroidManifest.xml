@@ -10,7 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:textAlignment="viewStart"
-        android:theme="@style/Theme.MakharijUlHuruf">
+        android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
             android:name=".LauncherActivity"
             android:exported="true">
