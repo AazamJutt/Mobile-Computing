@@ -38,7 +38,13 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
         dateText.setHint(DateFormat.getDateInstance().format(new Date()));
         addActivity = findViewById(R.id.addToList);
         addActivity.setOnClickListener(v -> {
-            ActivityModel new_activity = new ActivityModel(activityText.getText().toString(),dateText.getText().toString(),false);
+            String date = null;
+            if(dateText.getText().toString().equals("")){
+                date = DateFormat.getDateInstance().format(new Date());
+            }
+            else
+                date = dateText.getText().toString();
+            ActivityModel new_activity = new ActivityModel(activityText.getText().toString(),date,false);
             dbHelper.addActivity(new_activity);
             goBack();
         });

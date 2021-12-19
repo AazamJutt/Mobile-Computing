@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -23,10 +24,10 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    LinearLayout todoList;
+    ListView todoList;
     Button addActivity;
     Button shareReport;
-    public static ArrayList<ActivityModel> activityList;
+    ArrayList<ActivityModel> activityList;
     DbHelper dbHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,14 +36,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dbHelper = new DbHelper(this);
 
         activityList = dbHelper.getAllActivities();
-        todoList = (LinearLayout) findViewById(R.id.todoList);
+        todoList = findViewById(R.id.todoList);
         addActivity = (Button) findViewById(R.id.addActivity);
         shareReport = findViewById(R.id.btnShare);
         shareReport.setOnClickListener(this);
         addActivity.setOnClickListener(this);
-        initList();
+
+        todoList.setAdapter(new ActivityAdapter(this,activityList,dbHelper));
     }
-    public void goToAddActivity(View view) {
+    public void goToAddActivity() {
         Intent intent = new Intent(getApplicationContext(), AddActivity.class);
         startActivity(intent);
     }
@@ -58,89 +60,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         return str.toString();
     }
-    private void setMargins (View view, int left, int top, int right, int bottom) {
-        if (view.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
-            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
-            p.setMargins(left, top, right, bottom);
-            view.requestLayout();
-        }
-    }
-
-    public void addActivity(ActivityModel new_activity){
-        if(new_activity.getActivityInfo().equals(""))
-            return;
-        final View todoActivity = getLayoutInflater().inflate(R.layout.todo_activity,null,false);
-        TextView activity = (TextView) todoActivity.findViewById(R.id.activity_info);
-        CheckBox checkBox = (CheckBox) todoActivity.findViewById(R.id.activity_status);
-        TextView date = (TextView) todoActivity.findViewById(R.id.date);
-        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) todoActivity.getLayoutParams();
-        int n = 20;
-        setMargins(todoActivity,n,n,n,n);
-        activity.setText(new_activity.getActivityInfo());
-        if(new_activity.getStaus()){
-            activity.setPaintFlags(activity.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        }
-        checkBox.setChecked(new_activity.getStaus());
-        date.setText(new_activity.getDate());
-        //textInfo.setText("");
-        todoList.addView(todoActivity);
-        ImageView imageClose = (ImageView)todoActivity.findViewById(R.id.image_remove);
-        imageClose.setOnClickListener(v -> removeView(todoActivity));
-        checkBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(checkBox.isChecked()){
-                    TextView activity = (TextView) todoActivity.findViewById(R.id.activity_info);
-                    for(int i=0;i<activityList.size();i++){
-                        if(activityList.get(i).getActivityInfo().equals(activity.getText())) {
-                            activityList.get(i).setStaus(true);
-                            dbHelper.updateActivity(activityList.get(i));
-                        }
-                    }
-                    activity.setPaintFlags(activity.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                }
-                else{
-                    TextView activity = (TextView) todoActivity.findViewById(R.id.activity_info);
-                    for(int i=0;i<activityList.size();i++){
-                        if(activityList.get(i).getActivityInfo().equals(activity.getText())) {
-                            activityList.get(i).setStaus(false);
-                            dbHelper.updateActivity(activityList.get(i));
-                        }
-                    }
-                    activity.setPaintFlags(0);
-                }
-            }
-        });
-    }
-
-    private void removeView(View view){
-        TextView activity = (TextView) view.findViewById(R.id.activity_info);
-        CheckBox checkBox = (CheckBox) view.findViewById(R.id.activity_status);
-
-        for(int i=0;i<activityList.size();i++){
-            if(activityList.get(i).getActivityInfo().equals(activity.getText())) {
-                dbHelper.removeActivity(activityList.get(i));
-                activityList.remove(i);
-            }
-        }
-        todoList.removeView(view);
-
-    }
-
-
-
-    public void initList(){
-        for (ActivityModel activity:this.activityList
-             ) {
-            addActivity(activity);
-        }
-    }
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.addActivity:
-                Intent intent = new Intent(getApplicationContext(), AddActivity.class);
-                startActivity(intent);
+                goToAddActivity();
                 break;
             case R.id.btnShare:
                 Intent intent2 = new Intent(); intent2.setAction(Intent.ACTION_SEND);
