@@ -24,55 +24,27 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
     EditText dateText;
     EditText activityText;
     Button cancel;
+    DbHelper dbHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_activity);
         datePicker = findViewById(R.id.addDate);
+        dbHelper = new DbHelper(this);
         activityText = findViewById(R.id.activityInfo);
         cancel = findViewById(R.id.cancelBtn);
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goBack();
-            }
-        });
+        cancel.setOnClickListener(v -> goBack());
         dateText = findViewById(R.id.dateText);
         dateText.setHint(DateFormat.getDateInstance().format(new Date()));
         addActivity = findViewById(R.id.addToList);
-        addActivity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Activity new_activity = new Activity(activityText.getText().toString(),dateText.getText().toString(),false);
-                MainActivity.activityList.add(new_activity);
-                FileOutputStream fos = null;
-                try {
-                    fos = openFileOutput(MainActivity.FIELANAME,MODE_PRIVATE);
-                    for (Activity activity:MainActivity.activityList) {
-                        String data = activity.getActivityInfo()+","+activity.getDate()+','+activity.getStaus()+'\n';
-                        fos.write(data.getBytes());
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    if(fos!=null) {
-                        try {
-                            fos.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-                System.out.println(MainActivity.activityList);
-                goBack();
-            }
+        addActivity.setOnClickListener(v -> {
+            ActivityModel new_activity = new ActivityModel(activityText.getText().toString(),dateText.getText().toString(),false);
+            dbHelper.addActivity(new_activity);
+            goBack();
         });
-        datePicker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogFragment picker = new DatePickerFragment();
-                picker.show(getSupportFragmentManager(),"date picker");
-            }
+        datePicker.setOnClickListener(v -> {
+            DialogFragment picker = new DatePickerFragment();
+            picker.show(getSupportFragmentManager(),"date picker");
         });
     }
 

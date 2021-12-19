@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,20 +26,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     LinearLayout todoList;
     Button addActivity;
     Button shareReport;
-    public static ArrayList<Activity> activityList;
-    public static final String FIELANAME = "todolist.txt";
+    public static ArrayList<ActivityModel> activityList;
+    DbHelper dbHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        dbHelper = new DbHelper(this);
 
-        activityList = new ArrayList<>();
+        activityList = dbHelper.getAllActivities();
         todoList = (LinearLayout) findViewById(R.id.todoList);
         addActivity = (Button) findViewById(R.id.addActivity);
         shareReport = findViewById(R.id.btnShare);
         shareReport.setOnClickListener(this);
         addActivity.setOnClickListener(this);
-        readData();
+        initList();
     }
     public void goToAddActivity(View view) {
         Intent intent = new Intent(getApplicationContext(), AddActivity.class);
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private String createReport(){
         StringBuilder str = new StringBuilder();
-        for (Activity activity: activityList
+        for (ActivityModel activity: activityList
              ) {
             str.append("Info: ").append(activity.getActivityInfo());
             str.append(" Due-Date: ").append(activity.getDate());
@@ -66,24 +66,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void addActivity(String info,String dateString,boolean status){
-        if(info.equals(""))
+    public void addActivity(ActivityModel new_activity){
+        if(new_activity.getActivityInfo().equals(""))
             return;
         final View todoActivity = getLayoutInflater().inflate(R.layout.todo_activity,null,false);
         TextView activity = (TextView) todoActivity.findViewById(R.id.activity_info);
         CheckBox checkBox = (CheckBox) todoActivity.findViewById(R.id.activity_status);
         TextView date = (TextView) todoActivity.findViewById(R.id.date);
         ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) todoActivity.getLayoutParams();
-        Activity new_activity = new Activity(info,dateString,status);
-        activityList.add(new_activity);
         int n = 20;
         setMargins(todoActivity,n,n,n,n);
         activity.setText(new_activity.getActivityInfo());
-        if(status){
+        if(new_activity.getStaus()){
             activity.setPaintFlags(activity.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         }
         checkBox.setChecked(new_activity.getStaus());
-        date.setText(dateString);
+        date.setText(new_activity.getDate());
         //textInfo.setText("");
         todoList.addView(todoActivity);
         ImageView imageClose = (ImageView)todoActivity.findViewById(R.id.image_remove);
@@ -94,20 +92,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if(checkBox.isChecked()){
                     TextView activity = (TextView) todoActivity.findViewById(R.id.activity_info);
                     for(int i=0;i<activityList.size();i++){
-                        if(activityList.get(i).getActivityInfo().equals(activity.getText()))
+                        if(activityList.get(i).getActivityInfo().equals(activity.getText())) {
                             activityList.get(i).setStaus(true);
+                            dbHelper.updateActivity(activityList.get(i));
+                        }
                     }
                     activity.setPaintFlags(activity.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                    writeData();
                 }
                 else{
                     TextView activity = (TextView) todoActivity.findViewById(R.id.activity_info);
                     for(int i=0;i<activityList.size();i++){
-                        if(activityList.get(i).getActivityInfo().equals(activity.getText()))
+                        if(activityList.get(i).getActivityInfo().equals(activity.getText())) {
                             activityList.get(i).setStaus(false);
+                            dbHelper.updateActivity(activityList.get(i));
+                        }
                     }
                     activity.setPaintFlags(0);
-                    writeData();
                 }
             }
         });
@@ -118,60 +118,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         CheckBox checkBox = (CheckBox) view.findViewById(R.id.activity_status);
 
         for(int i=0;i<activityList.size();i++){
-            if(activityList.get(i).getActivityInfo().equals(activity.getText()))
+            if(activityList.get(i).getActivityInfo().equals(activity.getText())) {
+                dbHelper.removeActivity(activityList.get(i));
                 activityList.remove(i);
+            }
         }
         todoList.removeView(view);
-        writeData();
+
     }
 
 
 
-    public void readData(){
-        FileInputStream fis = null;
-        try {
-            fis = openFileInput(MainActivity.FIELANAME);
-            InputStreamReader isr = new InputStreamReader(fis);
-            BufferedReader br = new BufferedReader(isr);
-            String text;
-            while((text = br.readLine())!=null){
-                String[] fields = text.split(",");
-                addActivity(fields[0],fields[1],Boolean.parseBoolean(fields[2]));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if(fis!=null){
-                try {
-                    fis.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+    public void initList(){
+        for (ActivityModel activity:this.activityList
+             ) {
+            addActivity(activity);
         }
     }
-
-    public void writeData(){
-        FileOutputStream fos = null;
-        try {
-            fos = openFileOutput(MainActivity.FIELANAME,MODE_PRIVATE);
-            for (Activity activity:activityList) {
-                String data = activity.getActivityInfo()+","+activity.getDate()+','+activity.getStaus()+'\n';
-                fos.write(data.getBytes());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if(fos!=null) {
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()){

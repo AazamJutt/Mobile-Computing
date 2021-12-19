@@ -2,15 +2,23 @@ package com.example.to_do_list;
 
 import java.util.Calendar;
 
-public class Activity {
+public class ActivityModel {
+    int id;
     String activityInfo;
     String date;
     boolean status;
 
-    public Activity(String activityInfo,String date, boolean staus) {
+    public ActivityModel(String activityInfo, String date, boolean status) {
         this.activityInfo = activityInfo;
         this.date = date;
-        this.status = staus;
+        this.status = status;
+    }
+
+    public void setId(int id){
+        this.id = id;
+    }
+    public int getId() {
+        return id;
     }
 
     public String getActivityInfo() {
