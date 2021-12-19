@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">مخــارج لحـروف</string>
+    <string name="question">The sound of following letter is produced from?</string>
+    <string name="answerHeading">Choose an option!</string>
+    <string name="weclomeText">Welcome to</string>
+    <string name="learn">Learn</string>
+    <string name="Test">Test</string>
+    <string name="intro">Here you can learn about differnet articulation points and, also take a test of your skills.</string>
+</resources>
