@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/Aazam Jutt/AndroidStudioProjects/Quran/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.18803418803418803" />
+        <entry key="..\:/Users/Aazam Jutt/AndroidStudioProjects/Quran/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Users/Aazam Jutt/AndroidStudioProjects/Quran/app/src/main/res/layout/activity_verses.xml" value="0.1" />
+        <entry key="..\:/Users/Aazam Jutt/AndroidStudioProjects/Quran/app/src/main/res/layout/bismillah_view.xml" value="0.33" />
+        <entry key="..\:/Users/Aazam Jutt/AndroidStudioProjects/Quran/app/src/main/res/layout/fragment_by_parah.xml" value="0.27735042735042736" />
+        <entry key="..\:/Users/Aazam Jutt/AndroidStudioProjects/Quran/app/src/main/res/layout/fragment_by_surah.xml" value="0.28888888888888886" />
+        <entry key="..\:/Users/Aazam Jutt/AndroidStudioProjects/Quran/app/src/main/res/layout/surah_view.xml" value="0.22" />
+        <entry key="..\:/Users/Aazam Jutt/AndroidStudioProjects/Quran/app/src/main/res/layout/verse_view.xml" value="0.33" />
+        <entry key="..\:/Users/Aazam Jutt/AndroidStudioProjects/Quran/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.14017094017094017" />
+        <entry key="..\:/Users/Aazam Jutt/AndroidStudioProjects/Quran/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.14017094017094017" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
